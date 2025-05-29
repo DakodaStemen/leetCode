@@ -1,9 +1,26 @@
-# make sure to add all notes and comments
+class Solution:
+    def canPlaceFlowers(self, flowerbed: List[int], n: int) -> bool:
+        # Number of flowers planted so far
+        planted = 0
+        length = len(flowerbed)
 
+        # Iterate through each spot in the flowerbed
+        for i in range(length):
+            # Check if the current spot is empty
+            if flowerbed[i] == 0:
+                # Check if the left neighbor is empty or it's the first spot
+                check_left = (i == 0) or (flowerbed[i - 1] == 0)
+                # Check if the right neighbor is empty or it's the last spot
+                check_right = (i == length - 1) or (flowerbed[i + 1] == 0)
 
-# Problem: 1431. Kids With the Greatest Number of Candies
-# Link: https://leetcode.com/problems/kids-with-the-greatest-number-of-candies/
-# Difficulty: Easy
-# Tags: Array, Simulation
+                # If both neighbors (or edges) are empty, we can plant a flower here
+                if check_left and check_right:
+                    flowerbed[i] = 1  # Plant the flower
+                    planted += 1      # Increment the planted counter
 
-# Approach:         
+                    # If we've planted enough flowers, return True early
+                    if planted >= n:
+                        return True
+
+        # Final check: did we plant enough flowers?
+        return planted >= n
